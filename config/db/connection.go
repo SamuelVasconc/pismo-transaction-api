@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -10,6 +11,7 @@ import (
 
 	//factory
 	_ "github.com/lib/pq"
+	"github.com/pressly/goose"
 )
 
 //Server ...
@@ -20,6 +22,8 @@ type Server struct {
 //factory
 var (
 	DBConn *sql.DB
+	flags  = flag.NewFlagSet("goose", flag.ExitOnError)
+	dir    = flags.String("dir", "./migrations/", "directory with migration files")
 )
 
 //InitDb ...
@@ -48,8 +52,10 @@ func InitDb() {
 	DBConn.SetMaxIdleConns(maxIdleConns)
 	DBConn.SetMaxOpenConns(maxOpenConns)
 
-	if err != nil {
-		log.Printf("[db/init] - Erro ao tentar abrir conexão (%s). Erro: %s", a.Env, err.Error())
+	arguments := []string{}
+	goose.SetDialect("postgres")
+	if err := goose.Run("up", DBConn, *dir, arguments...); err != nil {
+		log.Fatalf("[db/init] - goose %v: %v", connectionString, err)
 	}
 }
 
