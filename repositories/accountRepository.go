@@ -17,7 +17,7 @@ func NewAccountRepository(Conn *sql.DB) interfaces.AccountRepository {
 }
 
 func (a *accountRepository) GetAccount(accountID int64) (*models.Account, error) {
-	query := `SELECT document_number FROM t_accounts WHERE account_id = ?`
+	query := `SELECT document_number FROM t_accounts WHERE account_id = $1`
 
 	smt, err := a.Conn.Prepare(query)
 	if err != nil {
@@ -40,7 +40,7 @@ func (a *accountRepository) GetAccount(accountID int64) (*models.Account, error)
 }
 
 func (a *accountRepository) CreateNewAccount(documentNumber string) (int64, error) {
-	query := `INSERT INTO t_accounts (document_number) VALUES(?)`
+	query := `INSERT INTO t_accounts (account_id, document_number) VALUES(DEFAULT, $1) RETURNING account_id`
 
 	smt, err := a.Conn.Prepare(query)
 	if err != nil {
@@ -49,18 +49,17 @@ func (a *accountRepository) CreateNewAccount(documentNumber string) (int64, erro
 
 	defer smt.Close()
 
-	result, err := smt.Exec(&documentNumber)
+	var id int64
+	err = smt.QueryRow(&documentNumber).Scan(&id)
 	if err != nil {
 		return 0, err
 	}
-
-	id, _ := result.LastInsertId()
 
 	return id, nil
 }
 
 func (a *accountRepository) ValidateAccount(documentNumber string) (bool, error) {
-	query := `SELECT 1 FROM t_accounts WHERE document_number = ?`
+	query := `SELECT 1 FROM t_accounts WHERE document_number = $1`
 
 	smt, err := a.Conn.Prepare(query)
 	if err != nil {

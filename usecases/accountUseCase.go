@@ -1,6 +1,8 @@
 package usecases
 
 import (
+	"errors"
+
 	"github.com/SamuelVasconc/pismo-transaction-api/interfaces"
 	"github.com/SamuelVasconc/pismo-transaction-api/models"
 )
@@ -31,7 +33,7 @@ func (a *accountUseCase) CreateNewAccount(account *models.Account) (*models.Acco
 	}
 
 	if exists {
-		return nil, err
+		return nil, errors.New("This account already exists.")
 	}
 
 	account.ID, err = a.accountRepository.CreateNewAccount(account.DocumentNumber)

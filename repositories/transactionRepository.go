@@ -17,7 +17,8 @@ func NewTransactionRepository(Conn *sql.DB) interfaces.TransactionRepository {
 }
 
 func (a *transactionRepository) CreateNewTransaction(transaction *models.Transaction) (int64, error) {
-	query := `INSERT INTO t_transactions (account_id, operation_type_id, amount, event_date) VALUES(?, ?, ?, ?)`
+	query := `INSERT INTO t_transactions (transaction_id, account_id, operation_type_id, amount, event_date) VALUES(DEFAULT, $1, $2, $3, $4)
+				RETURNING transaction_id`
 
 	smt, err := a.Conn.Prepare(query)
 	if err != nil {
@@ -26,12 +27,11 @@ func (a *transactionRepository) CreateNewTransaction(transaction *models.Transac
 
 	defer smt.Close()
 
-	result, err := smt.Exec(transaction.AcountID, transaction.OperationTypeID, transaction.Amount, transaction.EventDate)
+	var id int64
+	err = smt.QueryRow(transaction.AcountID, transaction.OperationTypeID, transaction.Amount, transaction.EventDate).Scan(&id)
 	if err != nil {
 		return 0, err
 	}
-
-	id, _ := result.LastInsertId()
 
 	return id, nil
 }

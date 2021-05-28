@@ -41,7 +41,7 @@ func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 	payload, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Println("[handlers/CreateNewTransaction] - Error on read parameters in request. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusInternalServerError, "", "")
+		utils.RespondWithError(c, http.StatusInternalServerError, "")
 		return
 	}
 
@@ -49,20 +49,20 @@ func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 	err = json.Unmarshal([]byte(payload), &outTransaction)
 	if err != nil {
 		log.Println("[handlers/CreateNewTransaction] - Error on parse parameters of request. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusBadRequest, "", "")
+		utils.RespondWithError(c, http.StatusBadRequest, "")
 		return
 	}
 
 	newID, err := h.transactionUseCase.CreateNewTransaction(&outTransaction)
 
 	if err == sql.ErrNoRows {
-		utils.RespondWithError(c, http.StatusBadRequest, "This Operation Type does not exists. Erro:", err.Error())
+		utils.RespondWithError(c, http.StatusBadRequest, "This Operation Type does not exists.")
 		return
 	}
 
 	if err != nil {
 		log.Println("[handlers/CreateNewTransaction] - Error on save transaction: ", err.Error())
-		utils.RespondWithError(c, http.StatusInternalServerError, "Error on save transaction.", err.Error())
+		utils.RespondWithError(c, http.StatusInternalServerError, "")
 		return
 	}
 

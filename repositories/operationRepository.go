@@ -16,7 +16,7 @@ func NewOperationRepository(Conn *sql.DB) interfaces.OperationRepository {
 }
 
 func (o *operationRepository) GetOperation(id int64) (string, error) {
-	query := `SELECT movement_type FROM t_operation_types WHERE operation_type_id = ?`
+	query := `SELECT movement_type FROM t_operation WHERE operation_type_id = $1`
 
 	smt, err := o.Conn.Prepare(query)
 	if err != nil {

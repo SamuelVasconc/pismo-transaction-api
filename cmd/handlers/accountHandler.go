@@ -42,7 +42,7 @@ func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 	payload, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Println("[handlers/CreateNewAccount] - Error on read parameters in request. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusInternalServerError, "", "")
+		utils.RespondWithError(c, http.StatusInternalServerError, "Error on read Account.")
 		return
 	}
 
@@ -50,14 +50,18 @@ func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 	err = json.Unmarshal(payload, &outAccount)
 	if err != nil {
 		log.Println("[handlers/CreateNewAccount] - Error on parse parameters of request. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusBadRequest, "", "")
+		utils.RespondWithError(c, http.StatusBadRequest, "Error on parse Account.")
 		return
 	}
 
 	inAccount, err := h.accountUseCase.CreateNewAccount(&outAccount)
+	if inAccount == nil {
+		utils.RespondWithError(c, http.StatusBadRequest, err.Error())
+		return
+	}
 	if err != nil {
 		log.Println("[handlers/CreateNewAccount] - Error on create Account: ", err.Error())
-		utils.RespondWithError(c, http.StatusInternalServerError, "Error on create Account.", err.Error())
+		utils.RespondWithError(c, http.StatusInternalServerError, "")
 		return
 	}
 
@@ -70,14 +74,14 @@ func (h *httpAccountHandler) GetAccount(c *gin.Context) {
 	convID, err := strconv.ParseInt(outID, 10, 64)
 	if err != nil {
 		log.Println("[handlers/GetAccount] - Error on parse parameters of request. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusBadRequest, "", "")
+		utils.RespondWithError(c, http.StatusBadRequest, "")
 		return
 	}
 
 	account, err := h.accountUseCase.GetAccount(convID)
 	if err != nil {
 		log.Println("[handlers/GetAccount] - Error on get account. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusInternalServerError, "", "")
+		utils.RespondWithError(c, http.StatusInternalServerError, "")
 		return
 	}
 

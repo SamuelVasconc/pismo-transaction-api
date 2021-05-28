@@ -2,7 +2,6 @@ package utils
 
 import (
 	"net/http"
-	"reflect"
 
 	"github.com/SamuelVasconc/pismo-transaction-api/models"
 	"github.com/gin-gonic/gin"
@@ -12,24 +11,17 @@ import (
 func ResponseWithJSON(g *gin.Context, code int, payload interface{}) {
 	var r models.ResponseSuccess
 	r.Records = payload
-	lenPayload := reflect.ValueOf(payload)
-	r.Meta.RecordCount = 1
-	r.Meta.Limit = 1
-	if lenPayload.Kind() == reflect.Slice {
-		r.Meta.Limit = lenPayload.Len()
-		r.Meta.RecordCount = lenPayload.Len()
-	}
 	g.JSON(code, r)
 }
 
 //RespondWithError corresponde a funcao que restorna erro
-func RespondWithError(g *gin.Context, code int, message string, moreInfo string) {
-	e := getMessageError(code)
+func RespondWithError(g *gin.Context, code int, message string) {
+	e := getMessageError(code, message)
 	g.JSON(code, e)
 }
 
 //GetMessageError ...
-func getMessageError(errorCode int) *models.ResponseError {
+func getMessageError(errorCode int, message string) *models.ResponseError {
 	switch errorCode {
 	case http.StatusInternalServerError:
 		return &models.ResponseError{
@@ -40,8 +32,8 @@ func getMessageError(errorCode int) *models.ResponseError {
 		}
 	default:
 		return &models.ResponseError{
-			DeveloperMessage: "Resource not found",
-			UserMessage:      "Resource not found",
+			DeveloperMessage: "",
+			UserMessage:      message,
 			MoreInfo:         "https://pismo.io/pt/",
 			ErrorCode:        404,
 		}

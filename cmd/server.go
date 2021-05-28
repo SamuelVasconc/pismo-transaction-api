@@ -46,9 +46,12 @@ func (s *Server) Initialization() {
 	//Inicialize Database Connection
 	db.InitDb()
 
-	// Middleware
+	s.Route = gin.New()
 	s.Route.Use(gin.Recovery())
-	s.Route.Use(middlewares.CORS())
+
+	// Middleware
+	m := new(middlewares.GoMiddleware)
+	s.Route.Use(m.CORS())
 	s.Route.NoRoute(utils.EndpointNotFound)
 	s.RouteGroup = s.Route.Group(s.GroupRequest)
 
