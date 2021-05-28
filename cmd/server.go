@@ -65,6 +65,7 @@ func (s *Server) Initialization() {
 	transactionUseCase := usecases.NewTransactionUseCase(transactionRepository, operationRepository, accountRepository)
 
 	//Handler instances
+	handlers.NewHealthCheckHTTPHandler(s.RouteGroup)
 	handlers.NewAccountHTTPHandler(s.RouteGroup, accountUseCase)
 	handlers.NewTransactionHTTPHandler(s.RouteGroup, transactionUseCase)
 	s.RouteGroup.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

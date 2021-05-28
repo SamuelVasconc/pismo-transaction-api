@@ -61,10 +61,34 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/models.Account'
+            $ref: '#/definitions/models.ResponseError'
       security:
       - Authorization: []
       summary: List Accounts
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body request
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      security:
+      - Authorization: []
+      summary: Create Account
   /health:
     get:
       description: HealthCheck API
@@ -78,4 +102,29 @@ paths:
           schema:
             $ref: '#/definitions/models.ResponseError'
       summary: HealthCheck
+  /transactions:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body request
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      security:
+      - Authorization: []
+      summary: Create Transaction
 swagger: "2.0"

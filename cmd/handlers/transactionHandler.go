@@ -26,15 +26,14 @@ func NewTransactionHTTPHandler(r *gin.RouterGroup, itransactionUseCase interface
 }
 
 // @Security Authorization
-// @Summary List Transaction
+// @Summary Create Transaction
 // @Description
 // @Accept  json
 // @Produce  json
 // @Param data body models.Account true "body request"
 // @Success 200 {object} models.Transaction
-// @Failure 400 {object} models.Transaction
-// @Router /accounts [post]
-// @Router /accounts [get]
+// @Failure 400 {object} models.ResponseError
+// @Router /transactions [post]
 func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 
 	payload, err := ioutil.ReadAll(c.Request.Body)

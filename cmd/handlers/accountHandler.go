@@ -28,15 +28,14 @@ func NewAccountHTTPHandler(r *gin.RouterGroup, iaccountUseCase interfaces.Accoun
 }
 
 // @Security Authorization
-// @Summary List Accounts
+// @Summary Create Account
 // @Description
 // @Accept  json
 // @Produce  json
 // @Param data body models.Account true "body request"
 // @Success 200 {object} models.Account
-// @Failure 400 {object} models.Account
+// @Failure 400 {object} models.ResponseError
 // @Router /accounts [post]
-// @Router /accounts [get]
 func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 
 	payload, err := ioutil.ReadAll(c.Request.Body)
@@ -68,6 +67,15 @@ func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 	utils.ResponseWithJSON(c, http.StatusOK, inAccount)
 }
 
+// @Security Authorization
+// @Summary List Accounts
+// @Description
+// @Accept  json
+// @Produce  json
+// @Param data body models.Account true "body request"
+// @Success 200 {object} models.Account
+// @Failure 400 {object} models.ResponseError
+// @Router /accounts [get]
 func (h *httpAccountHandler) GetAccount(c *gin.Context) {
 
 	outID := c.Param("accountId")
