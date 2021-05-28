@@ -1,0 +1,81 @@
+definitions:
+  models.Account:
+    properties:
+      account_id:
+        type: integer
+      document_number:
+        type: string
+    type: object
+  models.HealthCheck:
+    properties:
+      dbUP:
+        type: string
+      status:
+        type: string
+    type: object
+  models.ResponseError:
+    properties:
+      developerMessage:
+        type: string
+      errorCode:
+        type: integer
+      moreInfo:
+        type: string
+      userMessage:
+        type: string
+    type: object
+  models.Transaction:
+    properties:
+      account_id:
+        type: integer
+      amount:
+        type: number
+      event_date:
+        type: string
+      operation_type_id:
+        type: integer
+      transaction_id:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /accounts:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: body request
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Account'
+      security:
+      - Authorization: []
+      summary: List Accounts
+  /health:
+    get:
+      description: HealthCheck API
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.HealthCheck'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      summary: HealthCheck
+swagger: "2.0"

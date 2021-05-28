@@ -1,0 +1,19 @@
+### Visual Studio Code ###
+.vscode/
+
+### Git ###
+.git/
+
+### Other Files ###
+*.out
+*.sum
+*env.json
+*credentials.json
+cover.html
+fmtcoverage.html
+go.sum
+debug/
+vendor/
+.env*
+.scannerwork
+goose
