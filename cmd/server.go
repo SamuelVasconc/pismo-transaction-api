@@ -62,7 +62,7 @@ func (s *Server) Initialization() {
 	//Transaction instances
 	operationRepository := repositories.NewOperationRepository(db.DBConn)
 	transactionRepository := repositories.NewTransactionRepository(db.DBConn)
-	transactionUseCase := usecases.NewTransactionUseCase(transactionRepository, operationRepository)
+	transactionUseCase := usecases.NewTransactionUseCase(transactionRepository, operationRepository, accountRepository)
 
 	//Handler instances
 	handlers.NewAccountHTTPHandler(s.RouteGroup, accountUseCase)

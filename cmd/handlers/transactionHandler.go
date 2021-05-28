@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"database/sql"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -55,8 +54,8 @@ func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 
 	newID, err := h.transactionUseCase.CreateNewTransaction(&outTransaction)
 
-	if err == sql.ErrNoRows {
-		utils.RespondWithError(c, http.StatusBadRequest, "This Operation Type does not exists.")
+	if newID == 0 {
+		utils.RespondWithError(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
