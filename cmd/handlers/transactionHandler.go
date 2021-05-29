@@ -34,6 +34,7 @@ func NewTransactionHTTPHandler(r *gin.RouterGroup, itransactionUseCase interface
 // @Success 200 {object} models.Transaction
 // @Failure 400 {object} models.ResponseError
 // @Router /transactions [post]
+// CreateNewTransaction ...
 func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 
 	payload, err := ioutil.ReadAll(c.Request.Body)

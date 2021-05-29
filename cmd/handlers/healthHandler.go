@@ -27,6 +27,7 @@ func NewHealthCheckHTTPHandler(r *gin.RouterGroup) {
 // @Failure 400 {object} models.ResponseError
 // @Success 200 {object} models.HealthCheck
 // @Router /health [get]
+//HealthCheck ...
 func (h *httpHealthCheckHandler) HealthCheck(c *gin.Context) {
 
 	err := db.DBConn.Ping()

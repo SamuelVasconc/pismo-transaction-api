@@ -46,7 +46,7 @@ func InitDb() {
 
 	DBConn, err = sql.Open("postgres", connectionString)
 	if err != nil {
-		log.Printf("[db/init] - Erro ao tentar abrir conexão (%s). Erro: %s", a.Env, err.Error())
+		log.Printf("[db/init] - Error when trying to open connection (%s). Error: %s", a.Env, err.Error())
 	}
 	DBConn.SetConnMaxLifetime(time.Minute * maxLifeTime)
 	DBConn.SetMaxIdleConns(maxIdleConns)

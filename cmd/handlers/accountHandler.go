@@ -36,6 +36,7 @@ func NewAccountHTTPHandler(r *gin.RouterGroup, iaccountUseCase interfaces.Accoun
 // @Success 200 {object} models.Account
 // @Failure 400 {object} models.ResponseError
 // @Router /accounts [post]
+//CreateNewAccount ...
 func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 
 	payload, err := ioutil.ReadAll(c.Request.Body)
@@ -76,6 +77,7 @@ func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 // @Success 200 {object} models.Account
 // @Failure 400 {object} models.ResponseError
 // @Router /accounts [get]
+//GetAccount ...
 func (h *httpAccountHandler) GetAccount(c *gin.Context) {
 
 	outID := c.Param("accountId")
