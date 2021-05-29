@@ -24,6 +24,7 @@ http://localhost:{PORT}/api/v1/swagger/index.html
 - [GoLang](https://golang.org/) - compilador da linguagem Go
 - [Go Mod](https://github.com/golang/mod) - gerenciador de dependencias
 - [Docker](https://hub.docker.com/) - gerador e manipulador de containers
+- [Docker Compose](https://docs.docker.com/compose/install/) - ferramenta de definição e compartilhamento com containers
 
 ## Instalação
 
@@ -131,6 +132,16 @@ Repository vai armazenar qualquer manipulador de banco de dados ou até mesmo ch
 Reúne utilitários para auxiliar nos processos comuns aos testes ou configurações do mesmo.
 
 ## Iniciando
+
+Gerando container Postgres
+
+```bash
+# execute o comando abaixo para gerar o container apartir do arquivo docker-compose.yml na aplicação
+$ sudo docker-compose up -d
+
+# execute o comando abaixo para gerar o container apartir do docker
+$ docker run --name container_postgres -e "POSTGRES_PASSWORD=1234" -p 15432:5432  -d postgres
+```
 
 Buildando o projeto
 
