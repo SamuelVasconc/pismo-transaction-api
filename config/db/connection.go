@@ -11,6 +11,7 @@ import (
 
 	//factory
 	_ "github.com/lib/pq"
+	"github.com/pressly/goose"
 )
 
 //Server ...
@@ -22,15 +23,11 @@ type Server struct {
 var (
 	DBConn *sql.DB
 	flags  = flag.NewFlagSet("goose", flag.ExitOnError)
+	dir    = flags.String("dir", "./migrations/", "directory with migration files")
 )
 
 //InitDb ...
 func InitDb() {
-
-	// flags.Parse(os.Args[1:])
-
-	// schema := "public"
-	// goose.SetTableName(schema + ".goose_db_version")
 
 	a := Server{}
 	a.Env = os.Getenv("ENV")
@@ -55,10 +52,10 @@ func InitDb() {
 	DBConn.SetMaxIdleConns(maxIdleConns)
 	DBConn.SetMaxOpenConns(maxOpenConns)
 
-	// goose.SetDialect("postgres")
-	// if err := goose.Up(DBConn, "./migrations"); err != nil {
-	// 	log.Println("[db/init] - goose", err)
-	// }
+	goose.SetDialect("postgres")
+	if err := goose.Up(DBConn, "./migrations"); err != nil {
+		log.Println("[db/init] - goose", err)
+	}
 }
 
 //GetDNS represents de connection of database
