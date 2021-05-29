@@ -14,10 +14,12 @@ type transactionUseCase struct {
 	accountRepository     interfaces.AccountRepository
 }
 
+//NewTransactionUseCase ...
 func NewTransactionUseCase(transactionRepository interfaces.TransactionRepository, operationRepository interfaces.OperationRepository, accountRepository interfaces.AccountRepository) interfaces.TransactionUseCase {
 	return &transactionUseCase{transactionRepository, operationRepository, accountRepository}
 }
 
+//CreateNewTransaction by request
 func (t *transactionUseCase) CreateNewTransaction(transaction *models.Transaction) (int64, error) {
 
 	movementType, err := t.operationRepository.GetOperation(transaction.OperationTypeID)

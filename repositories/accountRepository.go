@@ -16,6 +16,7 @@ func NewAccountRepository(Conn *sql.DB) interfaces.AccountRepository {
 	return &accountRepository{Conn}
 }
 
+//GetAccount by ID
 func (a *accountRepository) GetAccount(accountID int64) (*models.Account, error) {
 	query := `SELECT document_number FROM t_accounts WHERE account_id = $1`
 
@@ -39,6 +40,7 @@ func (a *accountRepository) GetAccount(accountID int64) (*models.Account, error)
 	return newAccount, nil
 }
 
+//CreateNewAccount by Document Number and generate an ID
 func (a *accountRepository) CreateNewAccount(documentNumber string) (int64, error) {
 	query := `INSERT INTO t_accounts (account_id, document_number) VALUES(DEFAULT, $1) RETURNING account_id`
 
@@ -58,6 +60,7 @@ func (a *accountRepository) CreateNewAccount(documentNumber string) (int64, erro
 	return id, nil
 }
 
+//ValidateAccount validate if the account already exists by Document Number
 func (a *accountRepository) ValidateAccount(documentNumber string) (bool, error) {
 	query := `SELECT 1 FROM t_accounts WHERE document_number = $1`
 

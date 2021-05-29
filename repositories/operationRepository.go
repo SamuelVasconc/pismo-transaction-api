@@ -15,6 +15,7 @@ func NewOperationRepository(Conn *sql.DB) interfaces.OperationRepository {
 	return &operationRepository{Conn}
 }
 
+//GetOperation by id and return the movement type
 func (o *operationRepository) GetOperation(id int64) (string, error) {
 	query := `SELECT movement_type FROM t_operation WHERE operation_type_id = $1`
 

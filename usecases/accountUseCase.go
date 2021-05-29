@@ -11,10 +11,12 @@ type accountUseCase struct {
 	accountRepository interfaces.AccountRepository
 }
 
+//NewAccountUseCase ...
 func NewAccountUseCase(accountRepository interfaces.AccountRepository) interfaces.AccountUseCase {
 	return &accountUseCase{accountRepository}
 }
 
+//GetAccount by ID
 func (a *accountUseCase) GetAccount(accountID int64) (*models.Account, error) {
 
 	account, err := a.accountRepository.GetAccount(accountID)
@@ -25,6 +27,7 @@ func (a *accountUseCase) GetAccount(accountID int64) (*models.Account, error) {
 	return account, nil
 }
 
+//CreateNewAccount by Document Number and generate an ID
 func (a *accountUseCase) CreateNewAccount(account *models.Account) (*models.Account, error) {
 
 	exists, err := a.accountRepository.ValidateAccount(account.DocumentNumber)

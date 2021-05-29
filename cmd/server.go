@@ -21,6 +21,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Server represents a struct of server manipulations
 type Server struct {
 	Route            *gin.Engine
 	RouteGroup       *gin.RouterGroup
@@ -30,6 +31,7 @@ type Server struct {
 	GroupRequest     string
 }
 
+//Initialization starts all conections and instances
 func (s *Server) Initialization() {
 	s.Port = os.Getenv("PORT")
 	s.HttpReadTimeout = os.Getenv("HTTP_READ_TIMEOUT")
@@ -72,6 +74,7 @@ func (s *Server) Initialization() {
 
 }
 
+//StartServer starts the API for listening
 func (s *Server) StartServer() {
 
 	httpReadTimeout, _ := strconv.Atoi(s.HttpReadTimeout)

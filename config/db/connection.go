@@ -61,7 +61,7 @@ func InitDb() {
 	// }
 }
 
-//GetDNS representa a recuperação do acesso ao banco
+//GetDNS represents de connection of database
 func (a *Server) GetDNS() string {
 	var (
 		dbUser     string

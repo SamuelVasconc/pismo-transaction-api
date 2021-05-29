@@ -16,6 +16,7 @@ func NewTransactionRepository(Conn *sql.DB) interfaces.TransactionRepository {
 	return &transactionRepository{Conn}
 }
 
+//CreateNewTransaction by request
 func (a *transactionRepository) CreateNewTransaction(transaction *models.Transaction) (int64, error) {
 	query := `INSERT INTO t_transactions (transaction_id, account_id, operation_type_id, amount, event_date) VALUES(DEFAULT, $1, $2, $3, $4)
 				RETURNING transaction_id`

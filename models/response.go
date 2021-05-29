@@ -1,11 +1,11 @@
 package models
 
-//ResponseSuccess representa o response caso retorne sucesso
+//ResponseSuccess represents the success response
 type ResponseSuccess struct {
 	Records interface{} `json:"record"`
 }
 
-//ResponseError representa o response
+//ResponseError represents the error response
 type ResponseError struct {
 	DeveloperMessage string `json:"developerMessage"`
 	UserMessage      string `json:"userMessage"`
