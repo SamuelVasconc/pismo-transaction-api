@@ -32,7 +32,7 @@ func (h *httpHealthCheckHandler) HealthCheck(c *gin.Context) {
 
 	err := db.DBConn.Ping()
 	if err != nil {
-		log.Println("[handlers/HealthCheck] - Erro ao realizar ping no banco de dados. Erro: ", err.Error())
+		log.Println("[handlers/HealthCheck] - Erro when ping database. Error: ", err.Error())
 		utils.RespondWithError(c, http.StatusInternalServerError, "")
 		return
 	}
