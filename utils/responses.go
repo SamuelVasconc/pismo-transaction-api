@@ -9,9 +9,7 @@ import (
 
 //ResponseWithJSON ...
 func ResponseWithJSON(g *gin.Context, code int, payload interface{}) {
-	var r models.ResponseSuccess
-	r.Records = payload
-	g.JSON(code, r)
+	g.JSON(code, payload)
 }
 
 //RespondWithError corresponde a funcao que restorna erro

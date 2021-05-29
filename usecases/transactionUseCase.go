@@ -20,16 +20,16 @@ func NewTransactionUseCase(transactionRepository interfaces.TransactionRepositor
 }
 
 //CreateNewTransaction by request
-func (t *transactionUseCase) CreateNewTransaction(transaction *models.Transaction) (int64, error) {
+func (t *transactionUseCase) CreateNewTransaction(transaction *models.Transaction) (*models.Transaction, error) {
 
 	movementType, err := t.operationRepository.GetOperation(transaction.OperationTypeID)
 	if err != nil {
-		return 0, errors.New("This operation does not exists.")
+		return nil, errors.New("This operation does not exists.")
 	}
 
 	_, err = t.accountRepository.GetAccount(transaction.AcountID)
 	if err != nil {
-		return 0, errors.New("This account does not exists. Please register the new account before any transaction.")
+		return nil, errors.New("This account does not exists. Please register the new account before any transaction.")
 	}
 
 	transaction.EventDate = time.Now()
@@ -37,10 +37,10 @@ func (t *transactionUseCase) CreateNewTransaction(transaction *models.Transactio
 		transaction.Amount = transaction.Amount * (-1)
 	}
 
-	id, err := t.transactionRepository.CreateNewTransaction(transaction)
+	transaction.ID, err = t.transactionRepository.CreateNewTransaction(transaction)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
-	return id, nil
+	return transaction, nil
 }

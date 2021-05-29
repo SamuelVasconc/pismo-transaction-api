@@ -51,9 +51,9 @@ func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 		return
 	}
 
-	newID, err := h.transactionUseCase.CreateNewTransaction(&outTransaction)
+	newTransaction, err := h.transactionUseCase.CreateNewTransaction(&outTransaction)
 
-	if newID == 0 {
+	if newTransaction == nil {
 		utils.RespondWithError(c, http.StatusBadRequest, err.Error())
 		return
 	}
@@ -64,5 +64,5 @@ func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 		return
 	}
 
-	utils.ResponseWithJSON(c, http.StatusOK, newID)
+	utils.ResponseWithJSON(c, http.StatusOK, newTransaction)
 }

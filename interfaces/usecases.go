@@ -17,5 +17,5 @@ type AccountUseCase interface {
 
 //TransactionUseCase ...
 type TransactionUseCase interface {
-	CreateNewTransaction(transaction *models.Transaction) (int64, error)
+	CreateNewTransaction(transaction *models.Transaction) (*models.Transaction, error)
 }
