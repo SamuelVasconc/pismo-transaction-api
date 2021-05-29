@@ -42,7 +42,7 @@ func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 	payload, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Println("[handlers/CreateNewAccount] - Error on read parameters in request. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusInternalServerError, "Error on read Account.")
+		utils.RespondWithError(c, http.StatusBadRequest, "Error on read Account.")
 		return
 	}
 
@@ -56,7 +56,7 @@ func (h *httpAccountHandler) CreateNewAccount(c *gin.Context) {
 
 	inAccount, err := h.accountUseCase.CreateNewAccount(&outAccount)
 	if inAccount == nil {
-		utils.RespondWithError(c, http.StatusBadRequest, err.Error())
+		utils.RespondWithError(c, http.StatusConflict, err.Error())
 		return
 	}
 	if err != nil {

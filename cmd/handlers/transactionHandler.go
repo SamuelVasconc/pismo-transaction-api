@@ -40,7 +40,7 @@ func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 	payload, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Println("[handlers/CreateNewTransaction] - Error on read parameters in request. Erro: ", err.Error())
-		utils.RespondWithError(c, http.StatusInternalServerError, "")
+		utils.RespondWithError(c, http.StatusBadRequest, "")
 		return
 	}
 
@@ -55,7 +55,7 @@ func (h *httpTransactionHandler) CreateNewTransaction(c *gin.Context) {
 	newTransaction, err := h.transactionUseCase.CreateNewTransaction(&outTransaction)
 
 	if newTransaction == nil {
-		utils.RespondWithError(c, http.StatusBadRequest, err.Error())
+		utils.RespondWithError(c, http.StatusConflict, err.Error())
 		return
 	}
 
