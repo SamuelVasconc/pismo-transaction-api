@@ -139,6 +139,8 @@ Gerando container Postgres
 # execute o comando abaixo para gerar o container apartir do arquivo docker-compose.yml na aplicação
 $ sudo docker-compose up -d
 
+# OU
+
 # execute o comando abaixo para gerar o container apartir do docker
 $ docker run --name container_postgres -e "POSTGRES_PASSWORD=1234" -p 15432:5432  -d postgres
 ```
