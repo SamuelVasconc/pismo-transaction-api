@@ -14,6 +14,7 @@ fmtcoverage.html
 go.sum
 debug/
 vendor/
-.env*
 .scannerwork
 goose
+
+### .env deve ser incluido por conter variaveis de ambiente(excessao projeto pismo) ###
