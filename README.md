@@ -77,7 +77,7 @@ Configurando as variáveis de ambiente
 ### Diretórios
 
 ```bash
-tio-patinhas-conciliacao-worker
+pismo-transaction-api
        |-- cmd
            |-- server.go
            |-- handlers
@@ -155,7 +155,7 @@ $ go build
 Executando o projeto
 
 ```bash
-$ go run main.app or ./pismo-transaction-api
+$ go run main.go or ./pismo-transaction-api
 ```
 
 ## Testes
