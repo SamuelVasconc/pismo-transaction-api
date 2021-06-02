@@ -32,6 +32,11 @@ func (t *transactionUseCase) CreateNewTransaction(transaction *models.Transactio
 		return nil, errors.New("This account does not exists. Please register the new account before any transaction.")
 	}
 
+	err = t.accountRepository.UpdateAccount(transaction.AcountID, transaction.Amount, movementType)
+	if err != nil {
+		return nil, err
+	}
+
 	transaction.EventDate = time.Now()
 	if movementType == "S" {
 		transaction.Amount = transaction.Amount * (-1)

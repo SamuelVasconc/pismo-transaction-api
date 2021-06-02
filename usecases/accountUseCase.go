@@ -39,7 +39,11 @@ func (a *accountUseCase) CreateNewAccount(account *models.Account) (*models.Acco
 		return nil, errors.New("This account already exists.")
 	}
 
-	account.ID, err = a.accountRepository.CreateNewAccount(account.DocumentNumber)
+	if account.AvaliableCreditLimit < 0 {
+		return nil, errors.New("The credit of this account is negative.")
+	}
+
+	account.ID, err = a.accountRepository.CreateNewAccount(account.DocumentNumber, account.AvaliableCreditLimit)
 	if err != nil {
 		return nil, err
 	}
